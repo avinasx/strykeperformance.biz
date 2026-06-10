@@ -22,7 +22,10 @@
     --font-body: 'DM Sans', sans-serif;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
 
   body {
     background: var(--black);
@@ -76,14 +79,32 @@
     transition: background 0.2s;
   }
   .nav-cta:hover { background: var(--accent-light); }
+  .nav-toggle {
+    border: none;
+    background: transparent;
+    color: inherit;
+    position: relative;
+  }
+  .nav-toggle summary {
+    display: none;
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    padding: 0.35rem 0;
+  }
+  .nav-toggle summary::-webkit-details-marker { display: none; }
 
   /* HERO */
   .hero {
     min-height: 100vh;
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 4rem 6rem;
+    padding: 6.5rem 4rem 6rem;
     position: relative;
-    overflow: hidden;
+    overflow-x: clip;
   }
   .hero-bg-text {
     position: absolute;
@@ -91,13 +112,22 @@
     transform: translate(-50%, -50%);
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(10rem, 22vw, 22rem);
+    font-size: clamp(6rem, 18vw, 22rem);
     letter-spacing: -0.04em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.028);
     white-space: nowrap;
     user-select: none;
     pointer-events: none;
+    z-index: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 36rem;
   }
   .hero-tag {
     font-size: 0.72rem;
@@ -117,13 +147,17 @@
   h1 {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(3.2rem, 7vw, 6.5rem);
-    line-height: 1.0;
+    font-size: clamp(2.4rem, 5vw, 5.5rem);
+    line-height: 1.15;
     letter-spacing: -0.03em;
-    max-width: 14ch;
+    max-width: 100%;
     margin-bottom: 2rem;
   }
-  h1 em { font-style: italic; color: var(--accent); font-weight: 600; }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
   .hero-sub {
     font-size: 1.05rem;
     font-weight: 300;
@@ -163,11 +197,16 @@
   .btn-ghost:hover svg { transform: translateX(4px); }
 
   .hero-metrics {
-    position: absolute;
-    right: 4rem; bottom: 6rem;
-    display: flex; flex-direction: column; gap: 2rem;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem 3rem;
+    margin-top: 3.5rem;
+    max-width: 42rem;
   }
-  .metric { text-align: right; }
+  .metric { text-align: left; min-width: 7rem; }
   .metric-num {
     font-family: var(--font-display);
     font-size: 2.2rem;
@@ -182,11 +221,7 @@
     color: var(--muted);
     margin-top: 0.25rem;
   }
-  .metric-divider {
-    width: 1px; height: 3rem;
-    background: var(--border);
-    margin-left: auto;
-  }
+  .metric-divider { display: none; }
 
   /* MARQUEE */
   .marquee-wrap {
@@ -218,7 +253,10 @@
   }
 
   /* SECTION BASE */
-  section { padding: 8rem 4rem; }
+  section {
+    padding: 8rem 4rem;
+    scroll-margin-top: 5.5rem;
+  }
   .section-tag {
     font-size: 0.7rem;
     font-weight: 500;
@@ -237,8 +275,8 @@
   h2 {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(2.2rem, 4vw, 3.8rem);
-    line-height: 1.05;
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    line-height: 1.12;
     letter-spacing: -0.025em;
   }
   h2 em { font-style: italic; color: var(--accent); font-weight: 600; }
@@ -403,11 +441,11 @@
   .cta-inner { position: relative; z-index: 2; max-width: 70rem; margin: 0 auto; }
   .cta-inner h2 {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2.4rem, 6vw, 5.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--black);
-    line-height: 1.0;
+    line-height: 1.08;
     margin-bottom: 2.5rem;
   }
   .cta-inner h2 em { font-style: italic; color: rgba(10,10,10,0.5); }
@@ -474,6 +512,127 @@
   .delay-2 { animation-delay: 0.22s; }
   .delay-3 { animation-delay: 0.34s; }
   .delay-4 { animation-delay: 0.46s; }
+
+  /* DESKTOP HERO METRICS */
+  @media (min-width: 1100px) {
+    .hero-content {
+      max-width: 36rem;
+    }
+    .hero-metrics {
+      position: absolute;
+      right: 4rem;
+      bottom: 6rem;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 2rem;
+      margin-top: 0;
+      max-width: 16rem;
+    }
+    .metric { text-align: right; min-width: 0; }
+    .metric-divider {
+      display: block;
+      width: 1px;
+      height: 3rem;
+      background: var(--border);
+      margin-left: auto;
+    }
+  }
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    nav { padding: 1.25rem 2rem; }
+    section { padding: 6rem 2rem; }
+    .hero { padding: 6rem 2rem 4rem; }
+    .services-header { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 3rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .why-sticky { position: static; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .cta-section { padding: 6rem 2rem; }
+    footer { padding: 3rem 2rem; flex-wrap: wrap; gap: 2rem; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav {
+      padding: 1rem 1.25rem;
+      gap: 1rem;
+    }
+    .nav-toggle summary { display: block; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      right: 0;
+      min-width: 12rem;
+      flex-direction: column;
+      gap: 0;
+      padding: 0.75rem 0;
+      background: rgba(10,10,10,0.97);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 0.85rem 1.25rem;
+    }
+    .nav-toggle[open] .nav-links { display: flex; }
+    .nav-cta {
+      margin-left: auto;
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    section { padding: 4rem 1.25rem; }
+    .hero {
+      min-height: auto;
+      padding: 5.5rem 1.25rem 3rem;
+    }
+    h1 { line-height: 1.1; }
+    .hero-sub { max-width: none; font-size: 1rem; }
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+    .btn-primary,
+    .btn-ghost { justify-content: center; }
+    .hero-metrics {
+      gap: 1.5rem 2rem;
+      margin-top: 2.5rem;
+    }
+    .metric-num { font-size: 1.8rem; }
+
+    .services-grid,
+    .process-steps { grid-template-columns: 1fr; }
+    .service-card { padding: 2rem 1.5rem; }
+
+    .cta-section { padding: 4rem 1.25rem; }
+    .cta-bg { font-size: clamp(4rem, 32vw, 8rem); }
+    .cta-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .btn-dark { width: 100%; text-align: center; }
+
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 2.5rem 1.25rem;
+    }
+    .footer-links { flex-wrap: wrap; gap: 1rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-logo { font-size: 0.95rem; }
+    .hero-bg-text { font-size: clamp(4rem, 28vw, 6rem); }
+    h1 { font-size: clamp(2.2rem, 11vw, 2.8rem); }
+    .marquee-item { padding: 0 1.5rem; }
+  }
 </style>
 </head>
 <body>
@@ -481,11 +640,14 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Stryke<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#process">Process</a></li>
-  </ul>
+  <details class="nav-toggle">
+    <summary aria-label="Open menu">Menu</summary>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+    </ul>
+  </details>
   <a href="#contact" class="nav-cta">Get Started</a>
 </nav>
 
@@ -493,9 +655,9 @@
 <section class="hero">
   <div class="hero-bg-text" aria-hidden="true">STRYKE</div>
 
-  <div>
+  <div class="hero-content">
     <p class="hero-tag fade-up">Full-Stack Marketing Agency</p>
-    <h1 class="fade-up delay-1">Marketing That <em>Performs.</em></h1>
+    <h1 class="fade-up delay-1">Marketing That<br><em>Performs.</em></h1>
     <p class="hero-sub fade-up delay-2">We build demand, grow pipelines, and close the loop between awareness and revenue — across every channel that matters.</p>
     <div class="hero-actions fade-up delay-3">
       <a href="#services" class="btn-primary">Explore Services</a>
